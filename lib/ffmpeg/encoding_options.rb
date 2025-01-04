@@ -26,7 +26,7 @@ module FFMPEG
       keys.sort_by{|k| params_order(k) }.each do |key|
 
         value   = self[key]
-        a = send("convert_#{key}", value) if value && supports_option?(key)
+        a = send("convert_#{key}", value) if supports_option?(key)
         params += a unless a.nil?
       end
 
@@ -170,6 +170,14 @@ module FFMPEG
 
     def convert_watermark(value)
       ["-i", value]
+    end
+
+    def convert_strict(_value)
+      ["-strict"]
+    end
+
+    def convert_2(_value)
+      ["-2"]
     end
 
     def convert_watermark_filter(value)
